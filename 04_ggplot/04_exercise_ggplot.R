@@ -19,14 +19,15 @@ my_data <- read_excel(path = p1f, sheet = 1, na = "NA")
 # whether and where they had inhalation burns
 # first create a new variable that is a
 # factor (0=normal, 1=subjective, 2=upper, and 3=lower)
-my_data <-
+my_data$f.PFdivide <- as.factor(my_data$Pfdivide) 
   
   
 # create a data frame for a barplot
 # group by the new inhalation severity variable and the PFdivide
 # ("We also divided the patients into four groups depending on the PF ratio (>300, 200-300, 100-200, and <100)")
 # you will need the mean of mortality (look out for spelling mistake) for each level of inhalation injury (INHdiv)
-plot_data <-
+plot_data <- my_data %>% 
+  group_by(f.PFdivide, Pfdivide)
   
   
   
@@ -34,7 +35,9 @@ plot_data <-
 # create a facet for each severity level
 # add error bars
 # make nice axis labels
-p.1 <- 
+p.1 <- ggplot(my_data, aes(x= mortaltiy, y =Pfdivide))+
+  barplot(~Pfdivide)+
+  
   
   
   
