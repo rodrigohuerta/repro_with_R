@@ -3,7 +3,12 @@
 # by Hallas et al.  https://doi.org/10.1371/journal.pmed.1002722
 # the main dataset is an excel file pmed.1002722.s002.xlsx
 
+rm(list = ls())
+
 # load some libraries
+
+#install.packages("lmerTest")
+
 library(arm)
 library(tidyverse)
 library(readxl)
@@ -11,14 +16,29 @@ library(car)
 library(lmerTest)
 
 # read in data pmed.1002722.s002.xlsx
-my_data <-
-  
-  # remove non defined cases in the variable Asthma_ever_0_to_13yrs
-  
-  # create numeric variables asthma and visit from Asthma_ever_0_to_13yrs and Visitage
-  
-  # make a simple dot plot of the variable FEV1z
-  p.1 <- ggplot() 
+my_data <- read_excel("pmed.1002722.s002.xlsx", sheet =1, na = "NA")
+
+# remove non defined cases in the variable Asthma_ever_0_to_13yrs
+
+#sum(is.na(my_data$Asthma_ever_0_to_13yrs))
+
+table(my_data$Asthma_ever_0_to_13yrs)
+
+my_data1<-my_data %>% 
+  filter(Asthma_ever_0_to_13yrs == "Not defined")
+
+# create numeric variables asthma and visit from Asthma_ever_0_to_13yrs and Visitage
+
+my_data1<-my_data %>% 
+  mutate(
+    asthma = as.numeric(Asthma_ever_0_to_13yrs),
+    visit = as.numeric(Visitage)
+  )
+
+# make a simple dot plot of the variable FEV1z
+p.1 <- ggplot(my_data1, 
+              aes(x = FEV1z),
+              geom_dotplot()) 
 
 plot(p.1)
 
