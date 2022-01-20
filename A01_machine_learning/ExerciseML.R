@@ -4,8 +4,6 @@ list.of.packages<-c("mlbench","caret","randomForest","kernlab")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
-
-
 library(tidyverse)
 library(caret) #Machine learning in R
 library(mlbench) #dataset

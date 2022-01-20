@@ -57,6 +57,13 @@ cancer_data %>%
   facet_wrap(~ key, scales = "free") +
   geom_bar(alpha=.5, position="identity")
 
+cancerplot <- cancer_data %>%
+  gather(key, value, -"Class") %>% 
+  ggplot(aes(value, fill = Class)) + 
+  geom_bar() +
+  facet_wrap(~key, scales = "free") 
+  
+
 #Based on this. Which features (variables) will be most important for classification?
 #------------------------------------------------------------------------------------------------------------------------
 # split to test and training dataset
