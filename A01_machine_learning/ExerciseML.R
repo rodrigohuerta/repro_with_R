@@ -1,3 +1,11 @@
+
+list.of.packages<-c("mlbench","caret","randomForest","kernlab")
+
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
+
+
 library(tidyverse)
 library(caret) #Machine learning in R
 library(mlbench) #dataset
@@ -52,11 +60,19 @@ cancer_data %>%
 
 #now separate histogram for each class of "Class" to detect which variables differ between the classes
 cancer_data %>%
+  gather(key, value, -"Class") %>%
+  ggplot(aes(value, fill = Class))+
+  facet_wrap(~ key, scales = "free") + 
+  geom_bar()
+  
+  
   #gather the gather data, 
   #but leave out the class variable, be sure that you understand key and value in the gather function
   #create a ggplot with bars 
 
 #Based on the last plot. Which features (variables) will be most important for classification?
+
+# Mitosis
 #------------------------------------------------------------------------------------------------------------------------
 # split to test and training dataset
 #------------------------------------------------------------------------------------------------------------------------
